@@ -19,7 +19,7 @@ Node* createNode(dt);
 Node* ins(Node*, dt);
 
 // Search Node
-Node* search(dt);
+Node* search(Node*, dt);
 
 // Delete node
 Node* del(Node*, dt);
