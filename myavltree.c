@@ -7,6 +7,8 @@ int main(){
     //    30   70
     //   / \   / \
     //  20 40 60 80
+    //           / \
+    //          75  85
 
     Node* root = createNode(50);
     ins(root, 30);
@@ -15,8 +17,13 @@ int main(){
     ins(root, 70);
     ins(root, 60);
     ins(root, 80);
-    del(root, 20); 
+    ins(root, 75);
+    ins(root, 87);
     printTreeInOrder(root);
+    printf("\n");
+    del(root, 70);
+    printTreeInOrder(root);
+    printf("\n");
     return 0;
 }
 
@@ -109,9 +116,29 @@ Node* del(Node* root, dt data){
             free(root);
             return temp;
         }
+
+        // has 2 children
+        // Replace to-be-deleted node with 
+        // leftmost node in right subtree 
+        Node* temp = getSuccessor(root->right);
+        // Save successor data
+        dt saveVal = temp->data; 
+        // Delete successor node
+        del(root, saveVal);
+        // Update node to hold successor data
+        root->data = saveVal;
+        return root;
     }
 
     return root;
+}
+
+Node* getSuccessor(Node* node)
+{
+    if(node->left == NULL){
+        return node; // Left most node in right subtree
+    }
+    return getSuccessor(node->left);
 }
 
 void printTreeInOrder(Node* root)

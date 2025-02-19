@@ -24,5 +24,11 @@ Node* search(Node*, dt);
 // Delete node
 Node* del(Node*, dt);
 
+// Get inorder successor
+// Needed to delete node with 2 children
+// Input is to-be-deleted-node->right
+// Output is leftmost node in right subtree 
+Node* getSuccessor(Node*);
+
 // Prints tree in-order successor - KVD 
 void printTreeInOrder(Node*);
