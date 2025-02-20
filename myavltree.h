@@ -32,3 +32,6 @@ Node* getSuccessor(Node*);
 
 // Prints tree in-order successor - KVD 
 void printTreeInOrder(Node*);
+
+// Frees up nodes
+void destroyTree(Node*);

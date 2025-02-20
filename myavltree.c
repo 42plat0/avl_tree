@@ -8,7 +8,7 @@ int main(){
     //   / \   / \
     //  20 40 60 80
     //           / \
-    //          75  85
+    //          75  87
 
     Node* root = createNode(50);
     ins(root, 30);
@@ -21,9 +21,7 @@ int main(){
     ins(root, 87);
     printTreeInOrder(root);
     printf("\n");
-    del(root, 70);
-    printTreeInOrder(root);
-    printf("\n");
+    destroyTree(root);
     return 0;
 }
 
@@ -148,4 +146,23 @@ void printTreeInOrder(Node* root)
         printf("%d ", root->data);        // Need to change it based on datatype that is used
         printTreeInOrder(root->right);
     }
+    return;
+}
+
+void destroyTree(Node* root)
+{
+    if (root == NULL){
+       return; 
+    }
+
+    if (root->left != NULL){
+        destroyTree(root->left);
+    }
+    
+    if (root->right != NULL){
+        destroyTree(root->right);
+    }
+
+    free(root);
+    return;
 }
