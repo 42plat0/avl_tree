@@ -1,13 +1,18 @@
-run: myavltree
-	./myavltree
+name = myavltree
 
-make: myavltree.c
-	gcc myavltree.c -o myavltree
+run: $(name)
+	./$(name)
+
+make: $(name).c
+	gcc $(name).c -o $(name)
 
 gdb: 
-	rm -rf myavltree
-	gcc -g -o myavltree myavltree.c
-	gdb ./myavltree
+	rm -rf $(name)
+	gcc -g -o $(name) $(name).c
+	gdb ./$(name)
 	
 clean:
-	rm -rf myavltree
+	rm -rf $(name)
+
+valgrind:
+	valgrind ./$(name)
