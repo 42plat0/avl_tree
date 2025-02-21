@@ -37,6 +37,14 @@ void printTreeInOrder(Node*);
 // Frees up nodes
 void destroyTree(Node*);
 
+// Rotate node to the right
+// And return new root
+Node* rotateRight(Node* node);
+
+// Rotate node to the left
+// And return new root
+Node* rotateLeft(Node* node);
+
 // *****************************
 // *******Utility Funcs*********
 // *****************************
@@ -44,6 +52,8 @@ void destroyTree(Node*);
 int max(int, int);
 
 int getHeight(Node*);
+
+void updateHeight(Node*);
 
 int getBalance(Node*);
 

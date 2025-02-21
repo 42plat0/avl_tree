@@ -1,9 +1,13 @@
 #include "myavltree.h"
 
 int main(){
-    Node* root = createNode(30);
-    ins(root, 20);
-    ins(root, 10);
+    Node* root = NULL;
+    root = ins(root, 1);
+    root = ins(root, 2);
+    root = ins(root, 3);
+    // root = ins(root, 4);
+    // root = ins(root, 5);
+    // root = ins(root, 6);
 
     printTreeInOrder(root);
     printf("\n");
@@ -49,14 +53,9 @@ Node* ins(Node* root, dt data)
         return root;
 
     // Update ancestor node height 
-    root->height = 1 + max(getHeight(root->right), getHeight(root->left));
+    updateHeight(root);
 
     int balance = getBalance(root);
-
-    printf("Node: %d\n", root->data);
-    // printf("%d\n", getBalance(root->left));
-
-    printf("%d\n", balance);
 
     // There are 4 cases of rotation
     char *str = "";
@@ -69,24 +68,40 @@ Node* ins(Node* root, dt data)
     // }
     if (balance > 1){
         // Left-Left case
-        if (root->left->data > data)
+        if (root->left->data > data){
+            printf("old root: %d\n", root->data);
+            root = rotateRight(root);
+            printf("new root: %d\n", root->data);
             str = "Left-Left";
+        }
         // Left-Right case
-        else if (root->left->data < data)
+        else if (root->left->data < data){ 
+            printf("old root: %d\n", root->data);
+            root = rotateRight(root);
+            printf("new root: %d\n", root->data);
             str = "Left-Right";
-
+        }
     }
     else if (balance < -1){
         // Right-left case
-        if (root->right->data > data)
+        if (root->right->data > data){
+            printf("old root: %d\n", root->data);
+            root = rotateRight(root);
+            printf("new root: %d\n", root->data);
             str = "Right-Left";
+        }
         // Right-Right case
-        else if (root->right->data < data)
+        else if (root->right->data < data){
+            printf("old root: %d\n", root->data);
+            root = rotateLeft(root);
+            printf("new root: %d\n", root->data);
             str = "Right-Right";
+        }
+        printf("rotate: %d\n", root->data);
     }
 
     if (balance > 1 || balance < -1)
-    printf("This is %s case\n", str);
+        printf("This is %s case\n", str);
     // do we need this
     return root;
 }
@@ -193,6 +208,103 @@ void destroyTree(Node* root)
     return;
 }
 
+Node* rotateRight(Node* root)
+{
+    /*
+    Two cases
+
+    case 1: LEFT LEFT 
+        Imbalanced node's replacement (child)
+        Does not have right child
+        eg.:
+            30                    20
+           /                     /  \
+          20          ---->    10    30
+         /
+        10
+
+    case 2: LEFT RIGHT
+        Imbalanced node's replacement (child)
+        Has right child and needs to be attached
+        To imbalanced node's left side
+        eg.: 
+            30                   20
+           /                    /  \ 
+         20          ---->     10   30 
+        /  \                       /
+       10   25                    25 
+    */
+
+    Node* temp = root->left;
+
+    // Case 1
+    // LEFT LEFT
+    if (temp->right == NULL)
+    {
+        root->left = NULL;
+        temp->right = root;
+        
+        // Update heights
+        updateHeight(root);
+        updateHeight(temp);
+        return temp;
+    }
+    // Case 2
+    // LEFT RIGHT
+    else
+    {
+        // Rotate subtree root (temp) to left
+        // Update root left to new temp
+        // Rotate to right
+        temp = rotateLeft(temp);
+        root->left = temp;
+        
+        updateHeight(root);
+        updateHeight(temp);
+        return rotateRight(root);
+    }
+}
+
+Node* rotateLeft(Node* root)
+{
+    /*
+    Two cases
+
+    case 1:
+        Imbalanced node's replacement (child)
+        Does not have left child
+        eg.:
+            10                     20
+              \                   /  \
+               20       ---->   10    30
+                 \
+                  30
+
+    case 2:
+    */
+
+    Node* temp = root->right;
+
+    // Case 1
+    // RIGHT RIGHT
+    if (temp->left == NULL)
+    {
+        root->right = NULL;
+        temp->left = root;
+        
+        updateHeight(root);
+        updateHeight(temp);
+
+        return temp;
+    }
+    // Case 2
+    // RIGHT LEFT
+    else
+    {
+        
+    }
+}
+
 // *****************************
 // *******Utility Funcs*********
 // *****************************
@@ -204,6 +316,12 @@ int getHeight(Node* node)
         return 0;
 
     return node->height;
+}
+
+void updateHeight(Node* node)
+{
+    if (node != NULL)
+        node->height = 1 + max(getHeight(node->right), getHeight(node->left));
 }
 
 int max(int a, int b)
