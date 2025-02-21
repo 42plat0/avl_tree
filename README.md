@@ -1,5 +1,6 @@
 # avl_tree
 
 ### TODO:
-    - Destroy tree
-    - AVL rotations
+
+~~Rotations after insert~~  
+Rotations after deletion
