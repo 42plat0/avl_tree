@@ -1,24 +1,10 @@
 #include "myavltree.h"
 
 int main(){
-    // Creating the following BST
-    //      50
-    //     /  \
-    //    30   70
-    //   / \   / \
-    //  20 40 60 80
-    //           / \
-    //          75  87
-
-    Node* root = createNode(50);
-    ins(root, 30);
+    Node* root = createNode(30);
     ins(root, 20);
-    ins(root, 40);
-    ins(root, 70);
-    ins(root, 60);
-    ins(root, 80);
-    ins(root, 75);
-    ins(root, 87);
+    ins(root, 10);
+
     printTreeInOrder(root);
     printf("\n");
     destroyTree(root);
@@ -36,20 +22,17 @@ Node* createNode(dt data)
     // Set data value and pointers
     temp->data = data;
     temp->left = temp->right = NULL;
+    temp->height = 1;
 
     return temp;
 }
 
 Node* ins(Node* root, dt data) 
 {
-    // Found where to put new node
+    // Found where to put a new node
     if (root == NULL){
         return createNode(data);
     }
-
-    // Value exists
-    if (root->data == data)
-        return root;
 
     // Go left if data is smaller than curr node
     // and insert value there
@@ -61,7 +44,49 @@ Node* ins(Node* root, dt data)
     else if (root->data < data){
         root->right = ins(root->right, data);
     }
+    // Value exists
+    else
+        return root;
 
+    // Update ancestor node height 
+    root->height = 1 + max(getHeight(root->right), getHeight(root->left));
+
+    int balance = getBalance(root);
+
+    printf("Node: %d\n", root->data);
+    // printf("%d\n", getBalance(root->left));
+
+    printf("%d\n", balance);
+
+    // There are 4 cases of rotation
+    char *str = "";
+
+    // if (balance > 0){
+    //     printf("Left was inserted\n");
+    // }
+    // else{
+    //     printf("Right was inserted\n");
+    // }
+    if (balance > 1){
+        // Left-Left case
+        if (root->left->data > data)
+            str = "Left-Left";
+        // Left-Right case
+        else if (root->left->data < data)
+            str = "Left-Right";
+
+    }
+    else if (balance < -1){
+        // Right-left case
+        if (root->right->data > data)
+            str = "Right-Left";
+        // Right-Right case
+        else if (root->right->data < data)
+            str = "Right-Right";
+    }
+
+    if (balance > 1 || balance < -1)
+    printf("This is %s case\n", str);
     // do we need this
     return root;
 }
@@ -143,7 +168,8 @@ void printTreeInOrder(Node* root)
 {
     if (root != NULL){
         printTreeInOrder(root->left);
-        printf("%d ", root->data);        // Need to change it based on datatype that is used
+        printf("%d ", root->data);
+        // printf("Node val: %d, height: %d\n", root->data, root->height);        // Need to change it based on datatype that is used
         printTreeInOrder(root->right);
     }
     return;
@@ -166,3 +192,27 @@ void destroyTree(Node* root)
     free(root);
     return;
 }
+
+// *****************************
+// *******Utility Funcs*********
+// *****************************
+
+int getHeight(Node* node)
+{
+    // No subtree is found
+    if (node == NULL)
+        return 0;
+
+    return node->height;
+}
+
+int max(int a, int b)
+{
+    return (a >= b) ? a : b; 
+}
+
+int getBalance(Node* node)
+{
+    return getHeight(node->left) - getHeight(node->right);
+}
+

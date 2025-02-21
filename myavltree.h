@@ -8,6 +8,7 @@ struct Node {
     dt data;
     struct Node *right;
     struct Node *left;
+    int height;
 };
 
 typedef struct Node Node;
@@ -35,3 +36,15 @@ void printTreeInOrder(Node*);
 
 // Frees up nodes
 void destroyTree(Node*);
+
+// *****************************
+// *******Utility Funcs*********
+// *****************************
+
+int max(int, int);
+
+int getHeight(Node*);
+
+int getBalance(Node*);
+
+int isBalanced(Node*);
