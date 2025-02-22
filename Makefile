@@ -1,4 +1,4 @@
-name = myavltree
+name = main
 
 run: $(name)
 	./$(name)

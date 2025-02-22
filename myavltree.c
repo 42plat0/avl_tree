@@ -1,21 +1,5 @@
 #include "myavltree.h"
 
-int main(){
-    Node *root = NULL;
-    /* Constructing tree given in the above figure */
-    root = ins(root, 10);
-    root = ins(root, 20);
-    root = ins(root, 30);
-    root = ins(root, 40);
-    root = ins(root, 50);
-    root = ins(root, 25);
-
-    printTreeInOrder(root);
-    printf("\n");
-    destroyTree(root);
-    return 0;
-}
-
 Node* createNode(dt data)
 {
     Node* temp = (Node*)malloc(sizeof(Node));
@@ -56,56 +40,35 @@ Node* ins(Node* root, dt data)
     // Update ancestor node height 
     updateHeight(root);
 
+    // Get balance of curr node
     int balance = getBalance(root);
 
     // There are 4 cases of rotation
-    char *str = "";
-
-    // if (balance > 0){
-    //     printf("Left was inserted\n");
-    // }
-    // else{
-    //     printf("Right was inserted\n");
-    // }
     if (balance > 1){
         // Left-Left case
         if (root->left->data > data){
-            printf("old root: %d\n", root->data);
             root = rotateRight(root);
-            printf("new root: %d\n", root->data);
-            str = "Left-Left";
         }
         // Left-Right case
         else if (root->left->data < data){ 
-            printf("old root: %d\n", root->data);
             root->left = rotateLeft(root->left);
             root = rotateRight(root);
-            printf("new root: %d\n", root->data);
-            str = "Left-Right";
         }
     }
     else if (balance < -1){
         // Right-Right case
         if (root->right->data < data){
-            printf("old root: %d\n", root->data);
             root = rotateLeft(root);
-            printf("new root: %d\n", root->data);
-            str = "Right-Right";
         }
         // Right-left case
         else if (root->right->data > data){
-            printf("old root: %d\n", root->data);
             root->right = rotateRight(root->right);
             root = rotateLeft(root);
-            printf("new root: %d\n", root->data);
-            str = "Right-Left";
         }
-        printf("rotate: %d\n", root->data);
     }
 
-    if (balance > 1 || balance < -1)
-        printf("This is %s case\n", str);
-    // do we need this
+    // Return node
+    // And possibly a new root node after rotation
     return root;
 }
 
@@ -168,9 +131,45 @@ Node* del(Node* root, dt data){
         del(root, saveVal);
         // Update node to hold successor data
         root->data = saveVal;
-        return root;
+        // return root;
+    }
+    
+    // Update ancestor node height 
+    updateHeight(root);
+
+    // Get balance of curr node
+    int balance = getBalance(root);
+
+    // There are 4 cases of rotation
+    if (balance > 1){
+        // Left-Left case
+        // Child of imbalanced node has left (or both) child
+        if (getBalance(root->left) >= 0){
+            root = rotateRight(root);
+        }
+        // Left-Right case
+        // No left child
+        else{ 
+            root->left = rotateLeft(root->left);
+            root = rotateRight(root);
+        }
+    }
+    else if (balance < -1){
+        // Right-Right case
+        // Child of imbalanced node has right (or both) child
+        if (getBalance(root->right) <= 0){
+            root = rotateLeft(root);
+        }
+        // Right-left case
+        // No right child
+        else{
+            root->right = rotateRight(root->right);
+            root = rotateLeft(root);
+        }
     }
 
+    // Return node
+    // And possibly a new root node after rotation
     return root;
 }
 
