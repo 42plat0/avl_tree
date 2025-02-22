@@ -2,7 +2,9 @@
 #include <stdlib.h>
 
 // Define datatype used
-typedef int dt;
+typedef float dt;
+// Define dt print format
+#define dtFormat "%f "
 
 enum printOrder {IO, PRE, POST};
 typedef enum printOrder printOrder;

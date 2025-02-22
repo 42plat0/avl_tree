@@ -4,18 +4,12 @@
 int main(){
     Node *root = NULL;
     /* Constructing tree given in the above figure */
-    root = ins(root, 10);
-    root = ins(root, 20);
-    root = ins(root, 30);
-    root = ins(root, 25);
-    root = ins(root, 40);
-
-
-    print(root, POST);
-    printf("\n");
-    root = del(root, 10);
-
-    print(root, POST);
+    root = ins(root, 1.85);
+    root = ins(root, 2.01);
+    root = ins(root, 3.01);
+    root = ins(root, 4.01);
+    // root = ins(root, 'e');
+    print(root, PRE);
     printf("\n");
 
     destroyTree(root);

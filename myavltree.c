@@ -187,18 +187,19 @@ void print(Node* root, printOrder printOrder)
         switch (printOrder){
             case IO:
                 print(root->left, printOrder);
-                printf("%d ", root->data);
+                printf(dtFormat, root->data);
                 print(root->right, printOrder);
                 break;
             case PRE:
-                printf("%d ", root->data);
+                printf(dtFormat, root->data);
+                // putc(root->data, stdout);
                 print(root->left, printOrder);
                 print(root->right, printOrder);
                 break;
             case POST:
                 print(root->left, printOrder);
                 print(root->right, printOrder);
-                printf("%d ", root->data);
+                printf(dtFormat, root->data);
                 break;
         }
     }
