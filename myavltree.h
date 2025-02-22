@@ -4,13 +4,15 @@
 // Define datatype used
 typedef int dt;
 
+enum printOrder {IO, PRE, POST};
+typedef enum printOrder printOrder;
+
 struct Node {
     dt data;
     struct Node *right;
     struct Node *left;
     int height;
 };
-
 typedef struct Node Node;
 
 // Create node
@@ -31,8 +33,11 @@ Node* del(Node*, dt);
 // Output is leftmost node in right subtree 
 Node* getSuccessor(Node*);
 
-// Prints tree in-order successor - KVD 
-void printTreeInOrder(Node*);
+// Prints tree in order of choosing
+// IO = inorder     --- print nodes in left->root ->right order (ASC)  
+// PRE = preorder   --- print nodes in root->left ->right order
+// POST = postorder --- print nodes in left->right->root  order
+void print(Node*, printOrder);
 
 // Frees up nodes
 void destroyTree(Node*);

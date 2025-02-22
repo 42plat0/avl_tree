@@ -181,13 +181,26 @@ Node* getSuccessor(Node* node)
     return getSuccessor(node->left);
 }
 
-void printTreeInOrder(Node* root)
+void print(Node* root, printOrder printOrder)
 {
     if (root != NULL){
-        printf("%d ", root->data);
-        printTreeInOrder(root->left);
-        // printf("Node val: %d, height: %d\n", root->data, root->height);        // Need to change it based on datatype that is used
-        printTreeInOrder(root->right);
+        switch (printOrder){
+            case IO:
+                print(root->left, printOrder);
+                printf("%d ", root->data);
+                print(root->right, printOrder);
+                break;
+            case PRE:
+                printf("%d ", root->data);
+                print(root->left, printOrder);
+                print(root->right, printOrder);
+                break;
+            case POST:
+                print(root->left, printOrder);
+                print(root->right, printOrder);
+                printf("%d ", root->data);
+                break;
+        }
     }
     return;
 }

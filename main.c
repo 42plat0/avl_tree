@@ -11,11 +11,11 @@ int main(){
     root = ins(root, 40);
 
 
-    printTreeInOrder(root);
+    print(root, POST);
     printf("\n");
     root = del(root, 10);
 
-    printTreeInOrder(root);
+    print(root, POST);
     printf("\n");
 
     destroyTree(root);
