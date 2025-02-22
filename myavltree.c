@@ -181,24 +181,23 @@ Node* getSuccessor(Node* node)
     return getSuccessor(node->left);
 }
 
-void print(Node* root, printOrder printOrder)
+void printTree(Node* root, printOrder printOrder)
 {
     if (root != NULL){
         switch (printOrder){
             case IO:
-                print(root->left, printOrder);
+                printTree(root->left, printOrder);
                 printf(dtFormat, root->data);
-                print(root->right, printOrder);
+                printTree(root->right, printOrder);
                 break;
             case PRE:
                 printf(dtFormat, root->data);
-                // putc(root->data, stdout);
-                print(root->left, printOrder);
-                print(root->right, printOrder);
+                printTree(root->left, printOrder);
+                printTree(root->right, printOrder);
                 break;
             case POST:
-                print(root->left, printOrder);
-                print(root->right, printOrder);
+                printTree(root->left, printOrder);
+                printTree(root->right, printOrder);
                 printf(dtFormat, root->data);
                 break;
         }
@@ -272,7 +271,7 @@ void updateHeight(Node* node)
         node->height = 1 + max(getHeight(node->right), getHeight(node->left));
 }
 
-int max(int a, int b)
+dt max(dt a, dt b)
 {
     return (a >= b) ? a : b; 
 }

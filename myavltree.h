@@ -1,11 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Define datatype used
-typedef float dt;
-// Define dt print format
-#define dtFormat "%f "
-
+// Print order enum for different print orders
 enum printOrder {IO, PRE, POST};
 typedef enum printOrder printOrder;
 
@@ -56,12 +52,15 @@ Node* rotateLeft(Node* node);
 // *******Utility Funcs*********
 // *****************************
 
-int max(int, int);
+// Returns max int from two variables
+dt max(dt, dt);
 
+// Gets height of node 
+// = max(h_left, h_right) + 1
 int getHeight(Node*);
 
+// Updates height of given node
 void updateHeight(Node*);
 
+// Gets balance factor of given node
 int getBalance(Node*);
-
-int isBalanced(Node*);
