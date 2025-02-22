@@ -200,6 +200,7 @@ void printTree(Node* root, printOrder printOrder)
                 printTree(root->right, printOrder);
                 printf(dtFormat, root->data);
                 break;
+            default: break;
         }
     }
     return;
