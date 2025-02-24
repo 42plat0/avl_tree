@@ -1,10 +1,17 @@
 name = main
+lib = myavltree
 
 run: $(name)
 	./$(name)
 
-make: $(name).c
-	gcc $(name).c -o $(name)
+main: $(name).o $(lib).o
+	gcc -o $(name) $(name).o $(lib).o 
+
+main.o: $(name).c $(lib).h
+	gcc -c -g $(name).c
+
+myavltree.o: $(lib).c $(lib).h
+	gcc -c -g $(lib).c
 
 gdb: 
 	rm -rf $(name)

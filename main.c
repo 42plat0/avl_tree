@@ -1,11 +1,5 @@
-// Firstly,
-// Define datatypes used in AVL tree
-// Be sure that they match
-typedef float dt;
-#define dtFormat "%f "
-
 // Include library
-#include "myavltree.c"
+#include "myavltree.h"
 
 int main(){
     // Initialize root

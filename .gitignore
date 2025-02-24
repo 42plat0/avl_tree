@@ -1,5 +1,6 @@
 myavltree
 main
 .vscode
+*.o
 docs/.~lock.LFF.doc#
 docs/.~lock.LFFinstrukcija.doc#

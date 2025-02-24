@@ -1,10 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Define datatypes used in AVL tree
+// Be sure that they match
+typedef float dt;
+#define dtFormat "%f "
+
+
 // Print order enum for different print orders
 enum printOrder {IO, PRE, POST};
 typedef enum printOrder printOrder;
 
+// define Node sturcture
 struct Node {
     dt data;
     struct Node *right;
@@ -35,7 +42,7 @@ Node* getSuccessor(Node*);
 // IO = inorder     --- print nodes in left->root ->right order (ASC)  
 // PRE = preorder   --- print nodes in root->left ->right order
 // POST = postorder --- print nodes in left->right->root  order
-void print(Node*, printOrder);
+void printTree(Node*, printOrder);
 
 // Frees up nodes
 void destroyTree(Node*);
