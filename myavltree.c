@@ -185,11 +185,6 @@ void printTree(Node* root, printOrder printOrder)
 {
     if (root != NULL){
         switch (printOrder){
-            case IO:
-                printTree(root->left, printOrder);
-                printf(dtFormat, root->data);
-                printTree(root->right, printOrder);
-                break;
             case PRE:
                 printf(dtFormat, root->data);
                 printTree(root->left, printOrder);
@@ -200,7 +195,12 @@ void printTree(Node* root, printOrder printOrder)
                 printTree(root->right, printOrder);
                 printf(dtFormat, root->data);
                 break;
-            default: break;
+            default: 
+            case IO:
+                printTree(root->left, printOrder);
+                printf(dtFormat, root->data);
+                printTree(root->right, printOrder);
+                break;
         }
     }
     return;
